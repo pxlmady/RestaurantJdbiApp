@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ua.duikt</groupId>
+    <artifactId>restaurant-jdbi-app</artifactId>
+    <version>1.0</version>
+    <name>RestaurantDB MicroORM Jdbi 3 (ПР 3.2(6))</name>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <!-- Зберігати в .class імена параметрів конструкторів: за ними Jdbi (ConstructorMapper)
+             зіставляє стовпці результату з полями record-ів -->
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdbi.version>3.55.0</jdbi.version>
+    </properties>
+
+    <dependencies>
+        <!-- MicroORM: ядро Jdbi (Handle, Query, мапінг рядків у об'єкти) -->
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-core</artifactId>
+            <version>${jdbi.version}</version>
+        </dependency>
+        <!-- Декларативні DAO-інтерфейси: @SqlQuery, @SqlUpdate, @BindMethods -->
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-sqlobject</artifactId>
+            <version>${jdbi.version}</version>
+        </dependency>
+        <!-- JDBC-драйвер Microsoft для SQL Server: Jdbi працює поверх нього -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>13.2.1.jre11</version>
+        </dependency>
+        <!-- Jdbi пише службові логи через SLF4J; nop вимикає попередження "No SLF4J providers" -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Запуск з терміналу: mvn -q compile exec:java -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <mainClass>ua.duikt.restaurant.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
